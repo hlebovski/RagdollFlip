@@ -51,7 +51,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.12, y: 0.6, z: 0.95}
+  m_Size: {x: 0.15, y: 0.6, z: 0.95}
   m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &3591911535109994212
 GameObject:
@@ -104,7 +104,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.12, y: 0.6, z: 0.95}
+  m_Size: {x: 0.15, y: 0.6, z: 0.95}
   m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &4308776355402865075
 GameObject:
@@ -115,6 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2066013395315920864}
+  - component: {fileID: 659338938226737082}
   m_Layer: 0
   m_Name: Sofa
   m_TagString: Untagged
@@ -141,6 +142,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &659338938226737082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308776355402865075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f8d02261ecdd16428202286fea2bd3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4666935708988152935
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4666935708988152935}
   m_LocalRotation: {x: 0.09229593, y: 0.7010574, z: 0.09229593, w: 0.7010574}
-  m_LocalPosition: {x: 0, y: 0.469, z: 0.3}
+  m_LocalPosition: {x: -0, y: 0.468, z: 0.304}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,7 +205,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.12, y: 0.5, z: 2.1}
+  m_Size: {x: 0.15, y: 0.5, z: 2.1}
   m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1001 &9014570158629244726
 PrefabInstance:

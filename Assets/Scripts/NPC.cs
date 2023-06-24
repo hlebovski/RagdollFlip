@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour {
 
-    [SerializeField] private Animator _animator;
+
     private Rigidbody[] _ragdollRigidbodies;
     
     
@@ -24,14 +24,12 @@ public class NPC : MonoBehaviour {
         foreach (Rigidbody rigidbody in _ragdollRigidbodies) {
             rigidbody.isKinematic = true;
         }
-        _animator.enabled = true;
     }
 
     private void EnableRagdoll() {
         foreach (Rigidbody rigidbody in _ragdollRigidbodies) {
             rigidbody.isKinematic = false;
         }
-        _animator.enabled = false;
     }
 
 

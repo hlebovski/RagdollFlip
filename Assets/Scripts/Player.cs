@@ -4,26 +4,21 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Character : MonoBehaviour {
+public class Player : MonoBehaviour {
 
-    [SerializeField] private float _force = 1000f;
+    [SerializeField] private float _force;
     [SerializeField] private float _horizontal;
-    [SerializeField] private float _angular = -100f;
+    [SerializeField] private float _angular;
     [SerializeField] Rigidbody _pelvisRigidbody;
-
-    [SerializeField] Rigidbody _leftLegRigidbody;
-    [SerializeField] Rigidbody _rightLegRigidbody;
-
-    public bool IsGrounded;
-    public bool IsWin = false;
-    [SerializeField] private int _times;
+    [SerializeField] private Animator _animator;
     [SerializeField] Manager manager;
 
-
-    [SerializeField] private Animator _animator;
     private Rigidbody[] _ragdollRigidbodies;
-    
-    
+    public bool IsGrounded;
+    public bool IsWin = false;
+    private int _times;
+
+
 
     private void Awake() {
 
@@ -46,7 +41,8 @@ public class Character : MonoBehaviour {
     private void EnableRagdoll() {
         foreach (Rigidbody rigidbody in _ragdollRigidbodies) {
             rigidbody.isKinematic = false;
-        }
+            rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+        } 
         _animator.enabled = false;
     }
 
@@ -55,7 +51,7 @@ public class Character : MonoBehaviour {
         
 
         if (_pelvisRigidbody.isKinematic == false) {
-            _pelvisRigidbody.angularVelocity += new Vector3(_pelvisRigidbody.angularVelocity.x, _pelvisRigidbody.angularVelocity.y, _angular);
+            _pelvisRigidbody.angularVelocity = Vector3.Lerp(_pelvisRigidbody.angularVelocity, new Vector3(_pelvisRigidbody.angularVelocity.x, _pelvisRigidbody.angularVelocity.y, _angular), 1f);
         }
         
 
@@ -63,27 +59,31 @@ public class Character : MonoBehaviour {
 
             if(_pelvisRigidbody.isKinematic == true) EnableRagdoll();
 
-            foreach (Rigidbody rigidbody in _ragdollRigidbodies) {
-                rigidbody.velocity = Vector3.zero;
+            if (_times < 2) {
+                _times += 1;
+                foreach (Rigidbody rigidbody in _ragdollRigidbodies) {
+                    rigidbody.velocity = Vector3.zero;
+                }
+                _pelvisRigidbody.angularVelocity = Vector3.one;
+
+                _pelvisRigidbody.velocity = new Vector3(_horizontal, _force, 0);
             }
-            //_pelvisRigidbody.angularVelocity = new Vector3(_pelvisRigidbody.angularVelocity.x, _pelvisRigidbody.angularVelocity.y, _angular * 10);
-
-            _pelvisRigidbody.velocity = new Vector3(_horizontal, _force, 0);
-            //_pelvisRigidbody.angularVelocity = Vector3.Lerp(_pelvisRigidbody.angularVelocity, new Vector3(0, 0, _angular), 5f);
-
 
         }
 
 
+    }
 
+    public void Hit() {
+        _times = 0;
 
     }
 
-
     public void FinishSequence() {
-
-        enabled= false;
-        manager.Win();
+        if (enabled) {
+            enabled = false;
+            manager.Win();
+        }
 
     }
 

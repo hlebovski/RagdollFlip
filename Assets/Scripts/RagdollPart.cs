@@ -16,22 +16,27 @@ public class RagdollPart : MonoBehaviour {
     [SerializeField] private BodyPartType type;
 
     private Rigidbody _rigidbody;
-    private Character _character;
+    private Player player;
 
 
     private void Awake() {
         _rigidbody = GetComponent<Rigidbody>();
-        _character = GetComponentInParent<Character>();
+        player = GetComponentInParent<Player>();
     }
 
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.transform.GetComponent<Floor>()) {
             if (type == BodyPartType.Head || type == BodyPartType.Pelvis) {
-                _character.HitGround();
+
+                if (player.enabled) player.HitGround();
+
             }
+        } else if (collision.transform.GetComponentInParent<Furniture>()) {
+            player.Hit();
         }
-        
+
+
     }
 
 

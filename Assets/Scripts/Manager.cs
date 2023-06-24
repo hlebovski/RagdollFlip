@@ -15,6 +15,7 @@ public class Manager : MonoBehaviour {
         Instance = this;
         _youWinText.SetActive(false);
         _youLostText.SetActive(false);
+
     }
 
     private void Update() {
@@ -34,7 +35,10 @@ public class Manager : MonoBehaviour {
     }
 
     private void LoadNextScene() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Progress.Instance.level = SceneManager.GetActiveScene().buildIndex + 1;
+        Progress.Instance.Save();
+        SceneManager.LoadScene(Progress.Instance.level);
+
     }
 
     private void ReloadScene() {
