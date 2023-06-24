@@ -7,9 +7,9 @@ public static class SaveSystem {
 
     public static void SavePlayer(PlayerData playerData) {
 
-        string JSON = JsonUtility.ToJson(playerData);
+        string JSON = JsonUtility.ToJson(playerData, true);
         PlayerPrefs.SetString("Data", JSON);
-
+        Debug.Log(JSON);
     }
 
     public static PlayerData LoadPlayer() {

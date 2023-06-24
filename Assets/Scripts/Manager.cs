@@ -35,9 +35,9 @@ public class Manager : MonoBehaviour {
     }
 
     private void LoadNextScene() {
-        Progress.Instance.level = SceneManager.GetActiveScene().buildIndex + 1;
+        Progress.Instance.level = SceneManager.GetActiveScene().buildIndex;
         Progress.Instance.Save();
-        SceneManager.LoadScene(Progress.Instance.level);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
 

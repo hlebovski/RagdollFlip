@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _force: 24
   _horizontal: 7
-  _angular: -5.75
+  _maxAngular: -10.75
   _pelvisRigidbody: {fileID: 2023505050556305076}
   _animator: {fileID: 2023505049064628890}
   manager: {fileID: 0}

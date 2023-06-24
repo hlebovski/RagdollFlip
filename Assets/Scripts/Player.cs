@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private float _force;
     [SerializeField] private float _horizontal;
-    [SerializeField] private float _angular;
+    [SerializeField] private float _maxAngular;
     [SerializeField] Rigidbody _pelvisRigidbody;
     [SerializeField] private Animator _animator;
     [SerializeField] Manager manager;
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
     public bool IsGrounded;
     public bool IsWin = false;
     private int _times;
-
+    private float _currentAngular;
 
 
     private void Awake() {
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour {
         
 
         if (_pelvisRigidbody.isKinematic == false) {
-            _pelvisRigidbody.angularVelocity = Vector3.Lerp(_pelvisRigidbody.angularVelocity, new Vector3(_pelvisRigidbody.angularVelocity.x, _pelvisRigidbody.angularVelocity.y, _angular), 1f);
+            _pelvisRigidbody.angularVelocity = Vector3.Lerp(_pelvisRigidbody.angularVelocity, new Vector3(_pelvisRigidbody.angularVelocity.x, _pelvisRigidbody.angularVelocity.y, _currentAngular), 0.5f);
         }
         
 
@@ -59,12 +59,14 @@ public class Player : MonoBehaviour {
 
             if(_pelvisRigidbody.isKinematic == true) EnableRagdoll();
 
+            _currentAngular = _maxAngular;
+
             if (_times < 2) {
                 _times += 1;
                 foreach (Rigidbody rigidbody in _ragdollRigidbodies) {
                     rigidbody.velocity = Vector3.zero;
                 }
-                _pelvisRigidbody.angularVelocity = Vector3.one;
+                //_pelvisRigidbody.angularVelocity = Vector3.one;
 
                 _pelvisRigidbody.velocity = new Vector3(_horizontal, _force, 0);
             }
@@ -76,7 +78,7 @@ public class Player : MonoBehaviour {
 
     public void Hit() {
         _times = 0;
-
+        _currentAngular = 0;
     }
 
     public void FinishSequence() {
