@@ -6,18 +6,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField] private float _force;
-    [SerializeField] private float _horizontal;
-    [SerializeField] private float _maxAngular;
+    [SerializeField] private float _verticalImp;
+    [SerializeField] private float _horizontalImp;
+    [SerializeField] private float _angularImp;
+
+    [SerializeField] private bool _secondTapAngular;
+    [SerializeField] private float _targetAngular;
+    [SerializeField] private float _currentAngular;
+
     [SerializeField] Rigidbody _pelvisRigidbody;
     [SerializeField] private Animator _animator;
     [SerializeField] Manager manager;
 
+
     private Rigidbody[] _ragdollRigidbodies;
     public bool IsGrounded;
     public bool IsWin = false;
-    private int _times;
-    private float _currentAngular;
+    private int _tapTimes;
+    private float _tapDuration;
 
 
     private void Awake() {
@@ -48,27 +54,30 @@ public class Player : MonoBehaviour {
 
 
     void Update() {
-        
+
+        _currentAngular = Mathf.Lerp(_currentAngular, _targetAngular, 2f * Time.deltaTime);  
 
         if (_pelvisRigidbody.isKinematic == false) {
-            _pelvisRigidbody.angularVelocity = Vector3.Lerp(_pelvisRigidbody.angularVelocity, new Vector3(_pelvisRigidbody.angularVelocity.x, _pelvisRigidbody.angularVelocity.y, _currentAngular), 0.5f);
+            _pelvisRigidbody.angularVelocity = new Vector3(_pelvisRigidbody.angularVelocity.x, _pelvisRigidbody.angularVelocity.y, _currentAngular);
         }
         
 
         if (Input.GetMouseButtonDown(0)) {
 
+            _tapDuration= Time.time;
+
             if(_pelvisRigidbody.isKinematic == true) EnableRagdoll();
 
-            _currentAngular = _maxAngular;
+            if(_secondTapAngular) _currentAngular = _targetAngular;
+            _targetAngular = _angularImp;
 
-            if (_times < 2) {
-                _times += 1;
+            if (_tapTimes < 2) {
+                _tapTimes += 1;
                 foreach (Rigidbody rigidbody in _ragdollRigidbodies) {
                     rigidbody.velocity = Vector3.zero;
                 }
-                //_pelvisRigidbody.angularVelocity = Vector3.one;
 
-                _pelvisRigidbody.velocity = new Vector3(_horizontal, _force, 0);
+                _pelvisRigidbody.velocity = new Vector3(_horizontalImp, _verticalImp, 0);
             }
 
         }
@@ -76,9 +85,13 @@ public class Player : MonoBehaviour {
 
     }
 
+
     public void Hit() {
-        _times = 0;
-        _currentAngular = 0;
+        _tapTimes = 0;
+        if (Time.time - _tapDuration > 0.1f) {
+            _currentAngular = 2f;
+            _targetAngular = 0f;
+        }
     }
 
     public void FinishSequence() {
